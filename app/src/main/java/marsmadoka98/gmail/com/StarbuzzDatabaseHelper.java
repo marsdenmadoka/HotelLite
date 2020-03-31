@@ -26,8 +26,8 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
     }
     private void updateMyDatabase(SQLiteDatabase db,int oldVersion, int newVersion)  {
         if (oldVersion < 1) {
-            final String SQL_CREATE_STARBUZZLIST_TABLE = "CREATE TABLE " + StarbuzzEntry.TABLE_NAME //StarbuzzConstants.StarbuzzEntry.TABLE_NAME
-            + " (" + StarbuzzEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+            final String SQL_CREATE_STARBUZZLIST_TABLE = "CREATE TABLE " + StarbuzzEntry.TABLE_NAME
+            + " (" + StarbuzzEntry._ID + " INTEGER PRIMARY KEY, "
                     + StarbuzzEntry.COLUMN_NAME + " TEXT NOT NULL, "
                     + StarbuzzEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL" + ");";
             db.execSQL(SQL_CREATE_STARBUZZLIST_TABLE);
