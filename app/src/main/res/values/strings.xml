@@ -2,4 +2,6 @@
     <string name="app_name">Hotel Lite</string>
     <string name="search">Search</string>
     <string name="welcome_text">we offer variety of foods freshy baked pizza and pasta dishes why not try some</string>
+    <string name="view_location">view location</string>
+    <string name="search_for_hotels">search for hotels</string>
 </resources>
