@@ -3,6 +3,7 @@ package marsmadoka98.gmail.com;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,8 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
        mCursor=cursor;
     }
     public static interface Listener {
-        public void onClick(int position);
+        public void onitemClick(int position);
+        public void onbtnClick( int position);
     }
     public void setListener(Listener listener){ //Activity’s will use this method to register as a listener.
         this.listener = listener;
@@ -56,41 +58,49 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if(!mCursor.moveToPosition(position)){
-            return;
-        }
-        String name=mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
-         String description=mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
-         //int drawable=mCursor.getInt(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DRAWABLE));
+        CardView cardview = holder.cardView;
+        if (mCursor.moveToFirst()) {
 
-        CardView cardview=holder.cardView;
+        String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+        String description = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
 
-       // ImageView imageView=cardview.findViewById(R.id.image_view);
+
+        // ImageView imageView=cardview.findViewById(R.id.image_view);
         //imageView.setImageDrawable(String.valueOf(drawable));
 
-        TextView textView1=cardview.findViewById(R.id.text_view1);
+        TextView textView1 = cardview.findViewById(R.id.text_view1);
         textView1.setText(name);
-        TextView textView2=cardview.findViewById(R.id.text_view2);
-        textView2.setText(description);                              //dislay to show location HELP! HELP! HELP!
-
-        //Button btn =cardview.findViewById(R.id.button1);
-        //help! when the button is clicked it should display the location
+        TextView textView2 = cardview.findViewById(R.id.text_view2);
+        textView2.setText(description);//dislay to show location HELP! HELP! HELP!
+    }
+        //help! when the button is clicked it should display the location of the hotel
+        Button btn =cardview.findViewById(R.id.button1);
 
        cardview.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                if(listener !=null){
-                   listener.onClick(position);
+                   listener.onitemClick(position);
                }
 
            }
        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener !=null){
+                    listener.onbtnClick(position);
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
+        //return getItemCount();
         return mCursor.getCount();
+///     return mCursor.getColumnIndex();
     }
     //regular updating db
     public void swapCursor(Cursor newCursor){
