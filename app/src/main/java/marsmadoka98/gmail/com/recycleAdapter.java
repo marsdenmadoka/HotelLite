@@ -59,21 +59,18 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         CardView cardview = holder.cardView;
-        if (mCursor.moveToFirst()) {
+        if (mCursor.moveToPosition(position)) {
 
-        String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
-        String description = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
+            String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+            String description = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
+            // ImageView imageView=cardview.findViewById(R.id.image_view);
+            //imageView.setImageDrawable(String.valueOf(drawable));
 
-
-        // ImageView imageView=cardview.findViewById(R.id.image_view);
-        //imageView.setImageDrawable(String.valueOf(drawable));
-
-        TextView textView1 = cardview.findViewById(R.id.text_view1);
-        textView1.setText(name);
-        TextView textView2 = cardview.findViewById(R.id.text_view2);
-        textView2.setText(description);//dislay to show location HELP! HELP! HELP!
-    }
-        //help! when the button is clicked it should display the location of the hotel
+            TextView textView1 = cardview.findViewById(R.id.text_view1);
+            textView1.setText(name);
+            TextView textView2 = cardview.findViewById(R.id.text_view2);
+            textView2.setText(description);
+        }
         Button btn =cardview.findViewById(R.id.button1);
 
        cardview.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +87,7 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
             public void onClick(View view) {
                 if(listener !=null){
                     listener.onbtnClick(position);
+
                 }
             }
         });
@@ -98,11 +96,9 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        //return getItemCount();
         return mCursor.getCount();
-///     return mCursor.getColumnIndex();
     }
-    //regular updating db
+    /**
     public void swapCursor(Cursor newCursor){
      if(mCursor != null){
          mCursor.close();
@@ -112,5 +108,5 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
          notifyDataSetChanged();
      }
 
-    }
+    }*/
 }

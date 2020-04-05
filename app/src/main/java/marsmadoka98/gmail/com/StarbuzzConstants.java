@@ -16,10 +16,12 @@ public class StarbuzzConstants {
 
 
     }
+
     public static final class CategoryEntry implements BaseColumns {
         public static final String TABLE_NAME="CATEGORYITEMS";
-        public static final String COLUMN_NAME="catename";
-        public static final  String COLUMN_IMAGE="image";;
+        public  static final String COLUMN_ID="ID";
+        public static final String COLUMN_NAME="NAME";
+        public static final  String COLUMN_IMAGE="IMAGE";;
 
     }
 

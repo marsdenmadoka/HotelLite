@@ -10,7 +10,8 @@ import android.os.Bundle;
 
 public class Categoryofactivities extends AppCompatActivity {
 
-    public static final String EXTRA_CATEGORY = "categoryNo";
+    public static final String EXTRA_CATEGORY = "cateNo";
+    //  public static final String EXTRA_CATEGORY = "categoryNo";
     private SQLiteDatabase db;
     private CategoryactivitiesAdapter cAdapter;//this variable is want links us to our adpater
 

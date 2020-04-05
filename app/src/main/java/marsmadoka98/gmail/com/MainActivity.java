@@ -1,20 +1,25 @@
 package marsmadoka98.gmail.com;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db; //We’re adding these as private variables so we can close the database and the cursor in our onDestroy method.
     //private Cursor cursor;
     private recycleAdapter mAdapter; //creating a member variable for our adapter class
-
+    private Cursor mCursor;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +60,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onbtnClick(int position) {
 
-                Toast.makeText(MainActivity.this, "we will soon be displaying  directions to the hotel of your choice", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra(MapsActivity.EXTRA_MAPS,position);
+                //intent.putExtra(Categoryofactivities.EXTRA_BUTTON , position);
+                startActivity(intent);
 
             }
         });
-
-       // return recyclerView;
 
     }
 

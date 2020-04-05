@@ -46,21 +46,17 @@ public class CategoryactivitiesAdapter extends RecyclerView.Adapter<Categoryacti
 
     @Override
     public void onBindViewHolder(CategoryactivitiesAdapter.ViewHolder holder,final int position) {
-        if(!mCursor.moveToPosition(position)){
-            return;
+        CardView cardview = holder.cardView;
+        if (mCursor.moveToPosition(position)) {
+            String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.CategoryEntry.COLUMN_NAME));
+            int drawable = mCursor.getInt(mCursor.getColumnIndex(StarbuzzConstants.CategoryEntry.COLUMN_IMAGE));
+
+            ImageView photo = cardview.findViewById(R.id.info_image);
+            photo.setImageResource(drawable);
+
+            TextView textView = cardview.findViewById(R.id.info_text);
+            textView.setText(name);
         }
-
-        String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.CategoryEntry.COLUMN_NAME));
-        int drawable =mCursor.getInt(mCursor.getColumnIndex(StarbuzzConstants.CategoryEntry.COLUMN_IMAGE));
-
-        CardView cardview=holder.cardView;
-
-        ImageView photo =cardview.findViewById(R.id.info_image);
-        photo.setImageResource(drawable );
-
-        TextView textView=cardview.findViewById(R.id.info_text);
-        textView.setText(name);
-
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +67,7 @@ public class CategoryactivitiesAdapter extends RecyclerView.Adapter<Categoryacti
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

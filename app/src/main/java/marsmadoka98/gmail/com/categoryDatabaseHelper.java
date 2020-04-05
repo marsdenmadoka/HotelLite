@@ -1,4 +1,4 @@
-package marsmadoka98.gmail.com;
+/*package marsmadoka98.gmail.com;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -50,3 +50,4 @@ public class categoryDatabaseHelper extends SQLiteOpenHelper {
 
 
 }
+**/
