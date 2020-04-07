@@ -4,6 +4,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,60 +50,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         StarbuzzDatabaseHelper dbHelper = new StarbuzzDatabaseHelper(this);
 
 
-/**
-        double latitude=latLng.latitude;
-        double longitude=latLng.longitude;
 
-                cursor = db.query(StarbuzzConstants.StarbuzzEntry.TABLE_NAME,
-                new String[] {StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE,StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE}, StarbuzzConstants.StarbuzzEntry._ID,null,null,null,null,null);
-
-        if(cursor.moveToFirst()){
-            latitude =  cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE));
-            longitude= cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE));
-             }
-
-        latLng=new LatLng(latitude, longitude);
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder=new Geocoder(this, Locale.getDefault());
-
-        String address=null;
-        String city=null;
-        String state=null;
-        String country=null;
-        String postalCode=null;
-        String knownName=null;
-        try {
-            addresses=geocoder.getFromLocation(latitude, longitude, 1);
-            address=addresses.get(0).getAddressLine( 0);
-            city=addresses.get(0).getLocality();
-            state=addresses.get(0).getAdminArea();
-            country=addresses.get(0).getCountryName();
-            postalCode=addresses.get(0).getPostalCode();
-            knownName=addresses.get(0).getFeatureName();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in :"+address+city+state+country+postalCode+knownName));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-**/
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        int MapsNo= (Integer) getIntent().getExtras().get(EXTRA_MAPS);
+        int  MapsNo= (Integer) getIntent().getExtras().get(EXTRA_MAPS);
+//        Intent intent=getIntent();
+  //      String mNames=intent.getStringExtra("mNAME");
+    //    String desc=intent.getStringExtra("iDESC");
         mMap = googleMap;
          double latitude=0;
          double longitude=0;
@@ -112,8 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         db = dbHelper.getReadableDatabase();
         cursor = db.query(StarbuzzConstants.StarbuzzEntry.TABLE_NAME,
                 new String[] {StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE,StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE},
-                StarbuzzConstants.StarbuzzEntry._ID,new String[]{Integer.toString(MapsNo)},null,null,null,null);
-
+                "_ID = ?",new String[]{Integer.toString(MapsNo)},null,null,null,null);
         if(cursor.moveToPosition(position)){
             latitude =  cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE));
             longitude= cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE));
@@ -130,15 +87,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String country=null;
         String postalCode=null;
         String knownName=null;
-        try {
-            addresses=geocoder.getFromLocation(latitude, longitude, 1);
-            address=addresses.get(0).getAddressLine( 0);
-            city=addresses.get(0).getLocality();
-            state=addresses.get(0).getAdminArea();
-            country=addresses.get(0).getCountryName();
-            postalCode=addresses.get(0).getPostalCode();
-            knownName=addresses.get(0).getFeatureName();
 
+        try {
+
+            addresses=geocoder.getFromLocation(latitude, longitude, 1);
+            if(addresses != null && addresses.size() > 0) {
+                address = addresses.get(0).getAddressLine(0);
+                city = addresses.get(0).getLocality();
+                state = addresses.get(0).getAdminArea();
+                country = addresses.get(0).getCountryName();
+                postalCode = addresses.get(0).getPostalCode();
+                knownName = addresses.get(0).getFeatureName();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,10 +156,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
 
-
-    public int getItemCount() {
-        return cursor.getCount();
-    }
     @Override
     public void onDestroy() {
         super.onDestroy();

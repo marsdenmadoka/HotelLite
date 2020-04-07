@@ -23,6 +23,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db; //We’re adding these as private variables so we can close the database and the cursor in our onDestroy method.
     //private Cursor cursor;
@@ -44,26 +46,43 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter= new recycleAdapter(this,getAllItems());
 
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);//mAdapter
         mAdapter.setListener(new recycleAdapter.Listener(){
             @Override
             public void onitemClick(int position) {
                 //Intent intent = new Intent(getActivity(), PizzaDetailActivity.class);
                 //intent.putExtra(PizzaDetailActivity.EXTRA_PIZZANO, position);
                 //getActivity().startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "you clicked"+position, Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(MainActivity.this, Categoryofactivities.class);
+                //intent.putExtra(Categoryofactivities.EXTRA_CATEGORY , position);
+                //startActivity(intent);
+                //if (mCursor.moveToPosition(position)) {
+                  //  String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+                    //  name= String.valueOf(mCursor.getPosition());
+                    //String description = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
+                    // description =String.valueOf(mCursor.getPosition());
 
-                Intent intent = new Intent(MainActivity.this, Categoryofactivities.class);
-                intent.putExtra(Categoryofactivities.EXTRA_CATEGORY , position);
-                startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, Categoryofactivities.class);
+                  intent.putExtra(Categoryofactivities.EXTRA_CATEGORY,position);
+                //intent.putExtra("descript", description);
+                    startActivity(intent);
+                Toast.makeText(getApplicationContext(), "you clicked"+position, Toast.LENGTH_SHORT).show();
+
+               // }
+
             }
 
             @Override
             public void onbtnClick(int position) {
 
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                intent.putExtra(MapsActivity.EXTRA_MAPS,position);
-                //intent.putExtra(Categoryofactivities.EXTRA_BUTTON , position);
+                intent.putExtra(MapsActivity.EXTRA_MAPS , position);
                 startActivity(intent);
+
+                Toast.makeText(getApplicationContext(), "you clicked"+position, Toast.LENGTH_SHORT).show();
+
+
 
             }
         });

@@ -1,6 +1,7 @@
 package marsmadoka98.gmail.com;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.icu.text.Transliterator;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.data.DataHolder;
+
 import java.util.Map;
 
 public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHolder> {
@@ -25,7 +28,7 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
     private Context mContetx;
     private Cursor mCursor;
     private Listener listener;
-
+    private recycleAdapter mAdapter;
 
     public recycleAdapter(Context context, Cursor cursor) { //cursor is fetches our data from db  to display them
        mContetx=context;
@@ -44,7 +47,9 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
         private CardView cardView;
         public ViewHolder(CardView v) { //Each ViewHolder will display a CardView.
             super(v);
-            cardView = v; }
+            cardView = v;
+        }
+
     }
 
     //create the adapter,s viewHolder
@@ -58,7 +63,7 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        CardView cardview = holder.cardView;
+        final CardView cardview = holder.cardView;
         if (mCursor.moveToPosition(position)) {
 
             String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
@@ -76,8 +81,13 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
        cardview.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if(listener !=null){
-                   listener.onitemClick(position);
+               if(listener !=null) {
+                   //int position = mCursor.getPosition();
+                   //if(position != RecyclerView.NO_POSITION){
+                       listener.onitemClick(position);
+
+
+                   //}
                }
 
            }
@@ -87,7 +97,6 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
             public void onClick(View view) {
                 if(listener !=null){
                     listener.onbtnClick(position);
-
                 }
             }
         });
@@ -96,7 +105,7 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        return mCursor.getCount ();
     }
     /**
     public void swapCursor(Cursor newCursor){

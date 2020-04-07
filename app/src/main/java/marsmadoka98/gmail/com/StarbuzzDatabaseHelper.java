@@ -40,7 +40,7 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
             insertHotel(db, "KIMPSINKY","21 from your destination",20.5,45.1);
             insertHotel(db, "MARDSENHOTEL","37KM from your destination",10.5,45.9);
             insertHotel(db, "JUMIACAFR","50KM from your destination",70.5,45.5);
-            insertHotel(db, "SODABASE","77KM from your destination",10.2,15.6);
+            insertHotel(db, "SODABASE","77KM from your destination",10.2,85.6);
             insertHotel(db, "YAKOHOTEL","82KM from your destination",30.1,45.5);
             insertHotel(db, "SISIKWASISI","92KM from your destination",40.8,40.9);
             insertHotel(db, "LWADAHOTEL","102KM from your destination",50.1,44.0);
