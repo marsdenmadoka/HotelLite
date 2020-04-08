@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +22,7 @@ import com.google.android.gms.common.data.DataHolder;
 
 import java.util.Map;
 
-public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHolder> {
+public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHolder>  implements Filterable {
 
   //  private String[] captions;
     //private String [] distdescription;
@@ -34,6 +36,12 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
        mContetx=context;
        mCursor=cursor;
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
     public static interface Listener {
         public void onitemClick(int position);
         public void onbtnClick( int position);

@@ -43,7 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Categoryofactivities"></activity>
+        <activity android:name=".Categoryofactivities"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity android:name=".StoresItemsActivity" />
         <activity android:name=".StoresCategory" />
         <activity android:name=".FruitsItemsActivity" />
