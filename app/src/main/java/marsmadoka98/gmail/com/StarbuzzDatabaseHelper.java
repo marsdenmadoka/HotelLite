@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.FrameLayout;
+
+import com.google.android.gms.common.data.FreezableUtils;
+
 import marsmadoka98.gmail.com.StarbuzzConstants.*;
 
 public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
@@ -61,11 +65,25 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
             insertCategoryItems(db,"DRINKS",R.drawable.cappuccino);
             insertCategoryItems(db,"FRUITS",R.drawable.restaurant);
 
+            final String SQL_CREATE_FRUITS_TABLE ="CREATE TABLE "+ FruitsEntry.TABLE_NAME
+                    + " (" + FruitsEntry._ID + " INTEGER PRIMARY KEY, "
+                    +  FruitsEntry.COLUMN_NAME + " TEXT NOT NULL, "
+                    + FruitsEntry.COLUMN_PRICE + " INTEGER, "
+                    + FruitsEntry.COLUMN_DESCRPTION + " TEXT NOT NULL, "
+                    + FruitsEntry.COLUMN_IMAGE + " INTEGER" + ");";
+            db.execSQL(SQL_CREATE_FRUITS_TABLE);
+            insertFruits(db,"ORANGE", 50,R.drawable.diavolo,"sweet mango can produce mango juice deliouus helps in vitamin c");
+            insertFruits(db,"AVOCADO",45,R.drawable.cappuccino,"Avacado helps in vitamin c its alos a fruits");
+            insertFruits(db,"BANANA",10,R.drawable.restaurant,"produces banana juice helps in vision");
+            insertFruits(db,"WATERMELON",60,R.drawable.diavolo,"watery juice cools down your temperatures");
+            insertFruits(db,"PINEAPPLE",20,R.drawable.restaurant,"you will enjoy it try it man");
+            insertFruits(db,"MANGO",13,R.drawable.cappuccino,"my favourite fruit i really miss it");
 
         }
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE HOTELS ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("ALTER TABLE CATEGORYITEMS ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE FRUITS ADD COLUMN FAVOURITE NUMERIC");
         }
     }
 
@@ -85,6 +103,18 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
         db.insert("CATEGORYITEMS",null,categoryValues);
 
     }
+
+    private static void insertFruits(SQLiteDatabase db,String fruitname,int fruitprice,int fruitimage,String fruitdescription){
+        ContentValues FruitsValues=new ContentValues();
+        FruitsValues.put("FRUIITSNAME",fruitname);
+        FruitsValues.put("FRUITSPRICE",fruitprice);
+        FruitsValues.put("FRUITSIMAGE",fruitimage);
+        FruitsValues.put("FRUITSDESCRPTION",fruitdescription);
+        db.insert("FRUITS",null,FruitsValues);
+
+    }
+
+
 
 }
 

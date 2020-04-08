@@ -42,26 +42,11 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setListener(new recycleAdapter.Listener(){
             @Override
             public void onitemClick(int position) {
-                //Intent intent = new Intent(getActivity(), PizzaDetailActivity.class);
-                //intent.putExtra(PizzaDetailActivity.EXTRA_PIZZANO, position);
-                //getActivity().startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "you clicked"+position, Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(MainActivity.this, Categoryofactivities.class);
-                //intent.putExtra(Categoryofactivities.EXTRA_CATEGORY , position);
-                //startActivity(intent);
-                //if (mCursor.moveToPosition(position)) {
-                  //  String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
-                    //  name= String.valueOf(mCursor.getPosition());
-                    //String description = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
-                    // description =String.valueOf(mCursor.getPosition());
-
                     Intent intent = new Intent(MainActivity.this, Categoryofactivities.class);
                   intent.putExtra(Categoryofactivities.EXTRA_CATEGORY,position);
-                //intent.putExtra("descript", description);
                     startActivity(intent);
                 Toast.makeText(getApplicationContext(), "you clicked"+position, Toast.LENGTH_SHORT).show();
 
-               // }
 
             }
 
@@ -106,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         return db.query( StarbuzzConstants.StarbuzzEntry.TABLE_NAME,
          new String[] {StarbuzzConstants.StarbuzzEntry.COLUMN_NAME,StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION}, StarbuzzConstants.StarbuzzEntry._ID,null,null,null,null,null
         );
+
+
     }
 
     @Override

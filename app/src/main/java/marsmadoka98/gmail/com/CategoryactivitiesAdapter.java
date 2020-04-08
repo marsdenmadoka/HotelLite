@@ -26,6 +26,7 @@ public class CategoryactivitiesAdapter extends RecyclerView.Adapter<Categoryacti
     }
     public void setListener(Listener listener){ //Activity’s will use this method to register as a listener.
         this.listener = listener;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -72,5 +73,6 @@ public class CategoryactivitiesAdapter extends RecyclerView.Adapter<Categoryacti
     @Override
     public int getItemCount() {
         return mCursor.getCount();
+
     }
 }

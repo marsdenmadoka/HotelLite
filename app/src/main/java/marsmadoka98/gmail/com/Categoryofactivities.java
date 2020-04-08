@@ -46,7 +46,7 @@ public class Categoryofactivities extends AppCompatActivity {
                  startActivity(intent);
          break;
      case 2:
-         intent=new Intent(Categoryofactivities.this,StoresItemsActivity.class);
+         intent=new Intent(Categoryofactivities.this,FruitsItemsActivity.class);
                  startActivity(intent);
               break;
      default:

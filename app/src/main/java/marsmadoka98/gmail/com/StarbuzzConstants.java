@@ -24,7 +24,21 @@ public class StarbuzzConstants {
         public static final  String COLUMN_IMAGE="IMAGE";;
 
     }
+public static class FruitsEntry implements BaseColumns{
+        public static final String TABLE_NAME="FRUITS";
+    public static final String COLUMN_NAME="FRUIITSNAME";
+    public static final String COLUMN_PRICE="FRUITSPRICE";
+    public static final String COLUMN_IMAGE="FRUITSIMAGE";
+    public static final String COLUMN_DESCRPTION="FRUITSDESCRPTION";
 
 
+}
+public static class DrinksEntry implements BaseColumns{
 
+
+}
+public static class FoodsEntry implements BaseColumns{
+
+
+}
 }

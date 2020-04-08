@@ -43,17 +43,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Categoryofactivities"
             android:parentActivityName=".MainActivity">
         </activity>
-        <activity android:name=".StoresItemsActivity" />
-        <activity android:name=".StoresCategory" />
-        <activity android:name=".FruitsItemsActivity" />
-        <activity android:name=".FruitsCategory" />
-        <activity android:name=".FoodItemsActivity" />
-        <activity android:name=".FoodCategory" />
-        <activity android:name=".DrinkItemsActivity" />
-        <activity android:name=".DrinkCategory" />
+
+        <activity android:name=".StoresItemsActivity"
+            android:parentActivityName=".Categoryofactivities">
+        </activity>
+
+        <activity android:name=".FruitsItemsActivity"
+            android:parentActivityName=".Categoryofactivities">
+        </activity>
+
+        <activity android:name=".FoodItemsActivity"
+            android:parentActivityName=".Categoryofactivities">
+        </activity>
+
+        <activity android:name=".DrinkItemsActivity"
+            android:parentActivityName=".Categoryofactivities">
+        </activity>
     </application>
 
 </manifest>
