@@ -39,6 +39,7 @@ public class Categoryofactivities extends AppCompatActivity {
  switch(position){
      case 0:
   intent=new Intent(Categoryofactivities.this,FoodItemsActivity.class);
+
                  startActivity(intent);
  break;
      case 1:

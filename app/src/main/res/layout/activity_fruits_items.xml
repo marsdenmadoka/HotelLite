@@ -16,6 +16,7 @@
         android:textStyle="italic"
         android:textSize="20sp"
         android:id="@+id/welcome_text" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fruitsrecyclerview"
         android:scrollbars="vertical"

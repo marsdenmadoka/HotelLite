@@ -21,7 +21,7 @@ public class StarbuzzConstants {
         public static final String TABLE_NAME="CATEGORYITEMS";
         public  static final String COLUMN_ID="ID";
         public static final String COLUMN_NAME="NAME";
-        public static final  String COLUMN_IMAGE="IMAGE";;
+        public static final  String COLUMN_IMAGE="IMAGE";
 
     }
 public static class FruitsEntry implements BaseColumns{

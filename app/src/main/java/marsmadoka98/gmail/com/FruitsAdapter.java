@@ -22,9 +22,9 @@ public class FruitsAdapter extends RecyclerView.Adapter<FruitsAdapter.ViewHolder
         mCursor = cursor;
     }
 
-    public static interface Listener {
-        public void btnOrderClick(int position);
-        public void CardClick(int position);
+    public interface Listener {
+        void btnOrderClick(int position);
+        void CardClick(int position);
     }
     public void setListener(Listener listener){ //Activity’s will use this method to register as a listener.
         this.listener = listener;
@@ -64,10 +64,9 @@ public class FruitsAdapter extends RecyclerView.Adapter<FruitsAdapter.ViewHolder
 
             ImageView photo = cardview.findViewById(R.id.image_view);
             photo.setImageResource(drawable);
-
         }
-        Button btn =cardview.findViewById(R.id.btnOrder);
 
+        Button btn =cardview.findViewById(R.id.btnOrder);
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

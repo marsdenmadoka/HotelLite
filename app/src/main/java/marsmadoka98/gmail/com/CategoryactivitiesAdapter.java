@@ -20,8 +20,8 @@ public class CategoryactivitiesAdapter extends RecyclerView.Adapter<Categoryacti
         mContetx=context;
         mCursor=cursor;
     }
-    public static interface Listener {
-        public void cateItemClick(int position);
+    public interface Listener {
+        void cateItemClick(int position);
 
     }
     public void setListener(Listener listener){ //Activity’s will use this method to register as a listener.

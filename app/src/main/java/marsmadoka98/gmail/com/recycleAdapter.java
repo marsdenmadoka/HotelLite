@@ -1,50 +1,42 @@
 package marsmadoka98.gmail.com;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.data.DataHolder;
-
-import java.util.Map;
 
 public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHolder>  implements Filterable {
-
-  //  private String[] captions;
-    //private String [] distdescription;
-    //private int[] imageIds;
     private Context mContetx;
     private Cursor mCursor;
     private Listener listener;
     private recycleAdapter mAdapter;
 
-    public recycleAdapter(Context context, Cursor cursor) { //cursor is fetches our data from db  to display them
+    public recycleAdapter(Context context, Cursor cursor) {
        mContetx=context;
        mCursor=cursor;
     }
 
     @Override
     public Filter getFilter() {
+        //if (mCursor != null) {
+            //mCursor.close();
+            notifyDataSetChanged();
+        //}
         return null;
-    }
-
-    public static interface Listener {
-        public void onitemClick(int position);
-        public void onbtnClick( int position);
+    } //return true;
+    public interface Listener {
+        void onitemClick(int position);
+        void onbtnClick(int position);
     }
     public void setListener(Listener listener){ //Activity’s will use this method to register as a listener.
         this.listener = listener;
@@ -53,7 +45,7 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
     //Define the adapter’s ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private CardView cardView;
-        public ViewHolder(CardView v) { //Each ViewHolder will display a CardView.
+        public ViewHolder(CardView v) {
             super(v);
             cardView = v;
         }
@@ -89,15 +81,11 @@ public class recycleAdapter extends RecyclerView.Adapter<recycleAdapter.ViewHold
        cardview.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if(listener !=null) {
+               if (listener != null) {
                    //int position = mCursor.getPosition();
                    //if(position != RecyclerView.NO_POSITION){
-                       listener.onitemClick(position);
-
-
-                   //}
+                   listener.onitemClick(position);
                }
-
            }
        });
         btn.setOnClickListener(new View.OnClickListener() {

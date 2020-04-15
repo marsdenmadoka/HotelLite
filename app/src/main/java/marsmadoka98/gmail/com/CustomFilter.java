@@ -4,34 +4,37 @@
 import android.database.Cursor;
 import android.widget.Filter;
 
-public class CustomFilter extends Filter {
-    private recycleAdapter mAdapter;
-    private Cursor mCursor;
-    public CustomFilter(recycleAdapter mAdapter, Cursor mCursor) {
-        this.mAdapter = mAdapter;
-        this.mCursor = mCursor;
+public class CustomFilter {
+    //private recycleAdapter mAdapter;
+    private static Cursor mCursor;
+    private String name;
+    private String descrption;
+    public CustomFilter(String name,String descrption) {
+        this.name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+        this.descrption=mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION));
     }
 
-    @Override
-    protected FilterResults performFiltering(CharSequence consraint) {
-        FilterResults results = new FilterResults();
-        if(consraint != null && consraint.length()>0){
-            consraint=consraint.toString().toUpperCase();
-            Cursor filterModels;
-                for (int i=0; i < mCursor.getCount(); i++){
-                    //String name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME).);
-                   // if(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
-                 //  if(mCursor.getColumnIndex(S))
-                }
-            }
-
-
-        return null;
+    public static final CustomFilter[] myitems={
+      // new CustomFilter(mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME),mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_DESCRIPTION)))
+    };
+    public String getDescrption() {
+        return descrption;
     }
 
-    @Override
-    protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
+    public void setDescrption(String descrption) {
+        this.descrption =mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
     }
+
+    //mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+   public void setName(String name) {
+        this.name = mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
 }
 **/

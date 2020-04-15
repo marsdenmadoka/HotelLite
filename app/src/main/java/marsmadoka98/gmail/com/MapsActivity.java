@@ -16,11 +16,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -32,14 +35,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static final String EXTRA_MAPS = "MapsNo";
     private GoogleMap mMap;
-     private  LocationManager locationManager;
-     private   LocationListener locationListener;
-     private LatLng latLng;
-     final int position = 0;
-     private  long MIN_TIME = 1000;
-     private  long MIN_DIST = 5;
-     private SQLiteDatabase db;
-     Cursor cursor;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private LatLng latLng;
+    final int position = 0;
+    private long MIN_TIME = 1000;
+    private long MIN_DIST = 5;
+    private SQLiteDatabase db;
+    private static final int LOCATION_REQUEST = 500;
+    //private double lastlat;
+    //private double lastlong;
+
+    Cursor cursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,49 +56,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+       // ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        int  MapsNo= (Integer) getIntent().getExtras().get(EXTRA_MAPS);
+        int MapsNo = (Integer) getIntent().getExtras().get(EXTRA_MAPS);
 //        Intent intent=getIntent();
-  //      String mNames=intent.getStringExtra("mNAME");
-    //    String desc=intent.getStringExtra("iDESC");
+        //      String mNames=intent.getStringExtra("mNAME");
+        //    String desc=intent.getStringExtra("iDESC");
         mMap = googleMap;
-         double latitude=0;
-         double longitude=0;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        double latitude = 0;
+        double longitude = 0;
         // Add a marker in Sydney and move the camera
-        //latLng = new LatLng(latitude, longitude);
+
+        latLng = new LatLng(latitude, longitude);
         StarbuzzDatabaseHelper dbHelper = new StarbuzzDatabaseHelper(this);
         db = dbHelper.getReadableDatabase();
         cursor = db.query(StarbuzzConstants.StarbuzzEntry.TABLE_NAME,
-                new String[] {StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE,StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE},
-                "_ID = ?",new String[]{Integer.toString(MapsNo)},null,null,null,null);
-        if(cursor.moveToPosition(position)){
-            latitude =  cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE));
-            longitude= cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE));
+                new String[]{StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE, StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE},
+                "_ID = ?", new String[]{Integer.toString(MapsNo)}, null, null, null, null);
+        if (cursor.moveToPosition(position)) {
+            latitude = cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LATITUDE));
+            longitude = cursor.getDouble(cursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_LONGITUDE));
         }
 
-        latLng=new LatLng(latitude, longitude);
+        //latLng=new LatLng(latitude, longitude);
+        /*
         Geocoder geocoder;
         List<Address> addresses;
-        geocoder=new Geocoder(this, Locale.getDefault());
+        geocoder = new Geocoder(this, Locale.getDefault());
 
-        String address=null;
-        String city=null;
-        String state=null;
-        String country=null;
-        String postalCode=null;
-        String knownName=null;
+        String address = null;
+        String city = null;
+        String state = null;
+        String country = null;
+        String postalCode = null;
+        String knownName = null;
 
         try {
 
-            addresses=geocoder.getFromLocation(latitude, longitude, 1);
-            if(addresses != null && addresses.size() > 0) {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && addresses.size() > 0) {
                 address = addresses.get(0).getAddressLine(0);
                 city = addresses.get(0).getLocality();
                 state = addresses.get(0).getAdminArea();
@@ -102,23 +113,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in :"+address+city+state+country+postalCode+knownName));
+*/
+        //
+       final MarkerOptions markerOptions = new MarkerOptions();
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in :" + latitude+longitude));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
 
-
+        final double Latitude = latitude;
+        final double Longitude = longitude;
+        
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 try {
                     latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("MY position"));
-
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                     mMap.addMarker(new MarkerOptions().position(latLng).title("MY position"));
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+               final double lastlat = location.getLatitude();
+                final double lastlong = location.getLongitude();
+
+                float[] results = new float[10];
+                Location.distanceBetween(Latitude, Longitude, lastlat, lastlong, results);
+                mMap.addMarker(new MarkerOptions().snippet("distance=" + results[0]));
+
             }
 
             @Override
@@ -138,21 +162,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-        }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
 
-            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+       // locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         //    if (checkLocationPermission()) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
-            }
+       // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DIST, locationListener);
+    }
+
 
 
     @Override
@@ -162,34 +182,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         db.close();
     }
 
-}
 
-/**
-    public boolean checkLocationPermission() {
-        String permission = "android.permission.ACCESS_FINE_LOCATION";
-        int res = this.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }
+    /**
+     * public boolean checkLocationPermission() {
+     * String permission = "android.permission.ACCESS_FINE_LOCATION";
+     * int res = this.checkCallingOrSelfPermission(permission);
+     * return (res == PackageManager.PERMISSION_GRANTED);
+     * }
+     */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-
-            case 0: {
+            case LOCATION_REQUEST: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+
+                    mMap.setMyLocationEnabled(true);
                 }
-            }
+                break;
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+                // other 'case' lines to check for other
+                // permissions this app might request
+            }
         }
     }
-*/
+}
 
 
 

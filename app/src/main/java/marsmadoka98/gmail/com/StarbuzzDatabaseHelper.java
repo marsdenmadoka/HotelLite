@@ -73,11 +73,11 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
                     + FruitsEntry.COLUMN_IMAGE + " INTEGER" + ");";
             db.execSQL(SQL_CREATE_FRUITS_TABLE);
             insertFruits(db,"ORANGE", 50,R.drawable.diavolo,"sweet mango can produce mango juice deliouus helps in vitamin c");
-            insertFruits(db,"AVOCADO",45,R.drawable.cappuccino,"Avacado helps in vitamin c its alos a fruits");
+            insertFruits(db,"AVOCADO",45,R.drawable.cappuccino,"Avacado helps in vitamin c its also a fruits");
             insertFruits(db,"BANANA",10,R.drawable.restaurant,"produces banana juice helps in vision");
             insertFruits(db,"WATERMELON",60,R.drawable.diavolo,"watery juice cools down your temperatures");
-            insertFruits(db,"PINEAPPLE",20,R.drawable.restaurant,"you will enjoy it try it man");
-            insertFruits(db,"MANGO",13,R.drawable.cappuccino,"my favourite fruit i really miss it");
+            insertFruits(db,"PINEAPPLE",20,R.drawable.restaurant,"you will enjoy it try it and like it");
+            insertFruits(db,"MANGO",13,R.drawable.cappuccino,"produces mango juices helps in vitamin c also its a nice juice");
 
         }
         if (oldVersion < 2) {

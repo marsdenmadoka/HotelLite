@@ -8,13 +8,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -75,16 +77,49 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public boolean onQueryTextChange(String newText) {
+                /*
+                newText=newText.toLowerCase();
+
+
+                String sql="SELECT * FROM " + StarbuzzConstants.StarbuzzEntry.TABLE_NAME + " WHERE " + StarbuzzConstants.StarbuzzEntry.COLUMN_NAME+ " LIKE '%" + newText + "%'";
+                Cursor cursor = db.rawQuery(sql,null);
+
+                if(cursor.getCount() > 0){
+
+                    if(cursor.moveToFirst()){
+                        do{
+/
+                String wordId = cursor.getString(cursor.getColumnIndex(DbConstants.WORD_ID));
+                String word = cursor.getString(cursor.getColumnIndex(DbConstants.WORD));
+                String meaning = cursor.getString(cursor.getColumnIndex(DbConstants.MEANING));
+                String category = cursor.getString(cursor.getColumnIndex(DbConstants.CATEGORY));
+
+                // display your search result here in RecyclerView or in any manner
+                      mAdapter.getFilter();
+                        } while (cursor.moveToNext());
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "item does not found ", Toast.LENGTH_SHORT).show();
+                } cursor.close();
+*/
+                //ArrayList<CustomFilter> newList = new ArrayList<>();
+
+               // for(CustomFilter customFilter:m);
+               // String name=mCursor.getString(mCursor.getColumnIndex(StarbuzzConstants.StarbuzzEntry.COLUMN_NAME));
+                 //  if(name.contains(newText)){
+                   //    newList.addAll();
+                   //}
+                //mAdapter.getFilter();
+                return true;
             }
         });
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
     //fetching from_db
     private  Cursor getAllItems(){
